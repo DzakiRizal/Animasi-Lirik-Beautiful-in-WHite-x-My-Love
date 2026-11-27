@@ -1,0 +1,517 @@
+/* ============================================================
+   STYLE: AUTHENTIC VS CODE DARK THEME (NOT FULL BLACK)
+   ============================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* VS Code Near-Black / OLED Dark Palette */
+    --vscode-bg: #0a0b0e;            /* Background utama sangat gelap (hampir hitam) */
+    --vscode-sidebar-bg: #07080a;     /* Background panel samping */
+    --vscode-titlebar-bg: #08090b;    /* Background Title Bar */
+    --vscode-tab-inactive-bg: #07080a;/* Background area kosong di sebelah tab */
+    --vscode-tab-active-bg: #0a0b0e;  /* Background Tab aktif (menyatu dengan editor) */
+    --vscode-statusbar-bg: #007acc;
+    --vscode-border: #181a20;         /* Garis pemisah panel yang halus */
+
+    /* Typography */
+    --editor-font: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+    --ui-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-size: clamp(16px, 2.1vw, 25px);
+    --line-height: 2.2;
+
+    /* Syntax Highlighting Lengkap & Bersih */
+    --color-text: #d4d4d4;
+    --color-var: #9cdcfe;       /* Variabel, identifier (light cyan) */
+    --color-method: #dcdcaa;    /* Method / fungsi: println, feels, look (golden yellow) */
+    --color-string: #ce9178;    /* String literal kutip "..." (warm orange) */
+    --color-control: #c586c0;   /* Control Flow: if, else, for, while, async, function (purple) */
+    --color-keyword: #569cd6;   /* Keyword umum: public, class, void, new, static (blue) */
+    --color-type: #4ec9b0;      /* Tipe data: System, String, Memory, Heart (teal) */
+    --color-number: #b5cea8;    /* Angka literal: 1975, 42 (mint green) */
+    --color-operator: #d4d4d4;  /* Operator: !, :, ==, != */
+    --color-punct: #d4d4d4;     /* Titik, koma, titik koma */
+    --color-bracket: #ffd700;   /* Kurung kurawal {} dan kurung biasa () (gold bracket pair) */
+
+    /* Git Change Accent & Cursor */
+    --git-green: #2ea043;       /* Garis hijau git diff di samping nomor baris */
+    --cursor-color: #007acc;    /* Kursor biru/putih terang khas VS Code */
+}
+
+body {
+    background-color: #0d0e12;  /* Latar belakang ruangan/layar di luar VS Code */
+    color: var(--color-text);
+    font-family: var(--ui-font);
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ============================================================
+   APLIKASI UTAMA VS CODE
+   ============================================================ */
+
+.vscode-app {
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--vscode-bg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+}
+
+/* 1. Title Bar di Bagian Atas */
+.vscode-titlebar {
+    height: 35px;
+    background-color: var(--vscode-titlebar-bg);
+    border-bottom: 1px solid var(--vscode-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    user-select: none;
+    z-index: 20;
+}
+
+.window-controls {
+    display: flex;
+    gap: 8px;
+    width: 60px;
+}
+
+.control-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.control-dot.close { background-color: #ff5f56; }
+.control-dot.min { background-color: #ffbd2e; }
+.control-dot.max { background-color: #27c93f; }
+
+.titlebar-text {
+    font-size: 12px;
+    color: #999999;
+    letter-spacing: 0.5px;
+    font-family: var(--ui-font);
+}
+
+.titlebar-placeholder {
+    width: 60px;
+}
+
+/* 2. Konten Utama (Activity Bar + Sidebar + Editor) */
+.vscode-main {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Activity Bar (Sisi paling kiri) */
+.vscode-activitybar {
+    width: 48px;
+    background-color: var(--vscode-sidebar-bg);
+    border-right: 1px solid var(--vscode-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    gap: 18px;
+    z-index: 15;
+}
+
+.activity-icon {
+    color: #858585;
+    cursor: pointer;
+    transition: color 0.15s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 38px;
+    position: relative;
+}
+
+.activity-icon.active {
+    color: #ffffff;
+}
+
+.activity-icon.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background-color: #0078d4;
+}
+
+.activity-bottom-icon {
+    margin-top: auto;
+    color: #858585;
+    cursor: pointer;
+}
+
+/* Sidebar Explorer (File Tree) */
+.vscode-sidebar {
+    width: 200px;
+    background-color: var(--vscode-sidebar-bg);
+    border-right: 1px solid var(--vscode-border);
+    display: flex;
+    flex-direction: column;
+    font-size: 11.5px;
+    user-select: none;
+    z-index: 10;
+}
+
+.sidebar-header {
+    padding: 10px 16px;
+    font-weight: 600;
+    color: #bbbbbb;
+    letter-spacing: 0.8px;
+    font-size: 11px;
+}
+
+.sidebar-section-title {
+    padding: 4px 16px;
+    font-weight: 700;
+    color: #cccccc;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+}
+
+.arrow-down {
+    font-size: 9px;
+}
+
+.file-list {
+    margin-top: 4px;
+    display: flex;
+    flex-direction: column;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 16px 4px 24px;
+    color: #cccccc;
+    cursor: pointer;
+}
+
+.file-item.active {
+    background-color: #2a2d2e;
+    color: #ffffff;
+}
+
+.file-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.git-badge.modified {
+    color: #cca700;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+/* Ikon File TS / Java */
+.ts-icon {
+    background-color: #007acc;
+    color: #ffffff;
+    font-size: 8.5px;
+    font-weight: 800;
+    padding: 1px 3px;
+    border-radius: 2px;
+    font-family: monospace;
+}
+
+.json-icon {
+    color: #f1c40f;
+    font-weight: 800;
+    font-size: 10px;
+}
+
+/* 3. Kolom Editor (Tabs, Breadcrumbs, dan Tampilan Kode) */
+.vscode-editor-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--vscode-bg);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Tabs Header */
+.vscode-tabs {
+    height: 35px;
+    background-color: var(--vscode-tab-inactive-bg);
+    display: flex;
+    border-bottom: 1px solid var(--vscode-border);
+    user-select: none;
+    z-index: 10;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 16px;
+    font-size: 12px;
+    color: #969696;
+    background-color: var(--vscode-tab-inactive-bg);
+    border-right: 1px solid var(--vscode-border);
+    cursor: pointer;
+    position: relative;
+}
+
+.tab.active {
+    background-color: var(--vscode-tab-active-bg);
+    color: #ffffff;
+}
+
+.tab.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #0078d4; /* Garis biru di atas tab aktif persis seperti di foto */
+}
+
+.tab-dirty-dot {
+    color: #e2c08d;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.tab-close {
+    font-size: 14px;
+    color: #969696;
+    margin-left: 4px;
+}
+
+/* Breadcrumbs Bar */
+.vscode-breadcrumbs {
+    height: 24px;
+    background-color: var(--vscode-bg);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 16px;
+    font-size: 11.5px;
+    color: #969696;
+    border-bottom: 1px solid var(--vscode-border);
+    user-select: none;
+    z-index: 10;
+}
+
+.crumb-sep {
+    font-size: 12px;
+    color: #666666;
+}
+
+.symbol-f {
+    color: #b180d7;
+    font-weight: 700;
+    font-style: italic;
+    font-size: 11px;
+}
+
+.crumb-active {
+    color: #d4d4d4;
+}
+
+/* Area Viewport Editor (Tempat Animasi Berjalan) */
+.editor-window {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--vscode-bg); /* Background khas VS Code #1e1e1e */
+}
+
+/* Camera Track: Tempat baris bergerak naik/turun dan pan */
+.code-editor {
+    font-family: var(--editor-font);
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 40px 0;
+    transform-origin: 0 0;
+    will-change: transform;
+    transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.code-editor.returning {
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* ============================================================
+   SETIAP BARIS KODE (DENGAN NOMOR BARIS & INDIKATOR GIT HIJAU)
+   ============================================================ */
+
+.code-line {
+    display: flex;
+    align-items: center;
+    padding: 2px 16px;
+    border-radius: 2px;
+    white-space: pre;
+    position: relative;
+    background-color: transparent;
+    transition: 
+        opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform, filter;
+}
+
+/* Highlight Baris Aktif: Kotak bingkai halus seperti di foto VS Code */
+.code-line.active {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+    outline: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Nomor Baris & Indikator Diff Hijau */
+.line-gutter {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    user-select: none;
+}
+
+.line-num {
+    color: #858585;
+    width: 32px;
+    text-align: right;
+    font-size: 0.8em;
+    opacity: 0.6;
+    margin-right: 8px;
+    font-family: var(--editor-font);
+}
+
+.fold-arrow {
+    color: #858585;
+    font-size: 10px;
+    margin-right: 6px;
+}
+
+/* Garis Hijau Git Marker persis seperti di foto */
+.git-marker {
+    width: 3px;
+    height: 1.4em;
+    background-color: var(--git-green);
+    border-radius: 1px;
+    box-shadow: 0 0 6px rgba(46, 160, 67, 0.5);
+}
+
+.code-line.active .line-num {
+    color: #c6c6c6;
+    opacity: 0.95;
+}
+
+/* Konten Teks Kode */
+.line-text {
+    flex: 1;
+    position: relative;
+    font-family: inherit;
+    white-space: pre;
+}
+
+/* ============================================================
+   ANIMASI HURUF YANG SEDANG DIKETIK
+   ============================================================ */
+
+.char-active {
+    display: inline-block;
+    transform: scale(1.25) translateY(-1px);
+    transform-origin: center bottom;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    transition: transform 0.1s ease-out;
+}
+
+/* ============================================================
+   PEWARNAAN SINTAKS JAVA / VS CODE DARK+
+   ============================================================ */
+
+.t-control { color: var(--color-control); font-weight: 600; }
+.t-keyword { color: var(--color-keyword); font-weight: 600; }
+.t-type { color: var(--color-type); }
+.t-var { color: var(--color-var); }
+.t-method { color: var(--color-method); }
+.t-string { color: var(--color-string); }
+.t-number { color: var(--color-number); }
+.t-operator { color: var(--color-operator); }
+.t-punct { color: var(--color-punct); }
+.t-bracket { color: var(--color-bracket); }
+
+/* Kursor Balok Berkedip dengan Pendaran Halus */
+.cursor-block {
+    display: inline-block;
+    width: 2.5px;
+    height: 1.25em;
+    background-color: #569cd6;
+    vertical-align: text-bottom;
+    margin-left: 2px;
+    box-shadow: 0 0 10px rgba(86, 156, 214, 0.9);
+    animation: blink 0.85s steps(1) infinite;
+}
+
+@keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+/* ============================================================
+   STATUS BAR DI BAGIAN PALING BAWAH (VS CODE OFFICIAL)
+   ============================================================ */
+
+.vscode-statusbar {
+    height: 24px;
+    background-color: var(--vscode-statusbar-bg);
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 12px;
+    font-size: 11.5px;
+    user-select: none;
+    z-index: 20;
+}
+
+.status-left, .status-right {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.branch-icon {
+    font-size: 10px;
+}
